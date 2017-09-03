@@ -40,13 +40,12 @@ namespace NTS.WebServices
         public void ConfigureServices(IServiceCollection services)
         {
             //TODO: need to go separed to NTS.DATA projects
-            services.AddDbContext<NTSContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddTransient<ApplicationServices.Interfaces.Users.IUserManagementService,
-                ApplicationServices.Implementations.UserManagementService>();
+            //services.AddDbContext<NTSContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
+            services.AddInternalServices();
+
 
             var signingKey = new SymmetricSecurityKey(secretKey);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
