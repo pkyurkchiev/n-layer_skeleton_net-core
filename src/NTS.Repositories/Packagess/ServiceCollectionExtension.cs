@@ -9,6 +9,7 @@
         {
             services.AddDbContextConnector();
 
+            services.AddScoped<Interfaces.IUnitOfWork, Implementations.UnitOfWork>();
             services.AddTransient<Interfaces.IUserRepository,
                 Implementations.UserRepository>();
 

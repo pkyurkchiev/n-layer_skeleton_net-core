@@ -18,6 +18,7 @@
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            var vv = _managementService.GetAll();
             return new string[] { "value1", "value2" };
         }
 

@@ -15,7 +15,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=localhost;Initial Catalog=MyDW; Persist Security Info = False; User ID = TempUser; Password = Temp123");
+            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=N-TierSkeleton;Integrated Security=SSPI");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

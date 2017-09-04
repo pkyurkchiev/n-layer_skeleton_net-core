@@ -39,13 +39,8 @@ namespace NTS.WebServices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //TODO: need to go separed to NTS.DATA projects
-            //services.AddDbContext<NTSContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
             services.AddInternalServices();
-
+            services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
 
             var signingKey = new SymmetricSecurityKey(secretKey);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
