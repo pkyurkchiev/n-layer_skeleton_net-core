@@ -6,7 +6,7 @@
     {
         void Save(TObject item);
 
-        void Remove(int id);
+        void Delete(int id);
 
         TObject GetById(int id);
 

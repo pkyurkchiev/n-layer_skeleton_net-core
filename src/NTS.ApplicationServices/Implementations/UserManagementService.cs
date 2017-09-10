@@ -2,6 +2,7 @@
 {
     using Data.Entities;
     using Interfaces.Users;
+    using Microsoft.Extensions.Logging;
     using Shared;
     using System;
     using System.Collections.Generic;
@@ -28,7 +29,7 @@
             }
             catch (Exception ex)
             {
-               // _logger.Error(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return allUsers;
@@ -46,14 +47,14 @@
             }
             catch (Exception ex)
             {
-                //_logger.Error(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return user;
 
         }
 
-        public void Remove(int id)
+        public void Delete(int id)
         {
             try
             {
@@ -62,7 +63,7 @@
             }
             catch (Exception ex)
             {
-               // _logger.Error(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
         }
@@ -87,7 +88,7 @@
             }
             catch (Exception ex)
             {
-                //_logger.Error(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
         }

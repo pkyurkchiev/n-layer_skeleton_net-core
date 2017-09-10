@@ -1,8 +1,10 @@
 ﻿namespace NTS.WebServices.Controllers.Shared
 {
     using ApplicationServices.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class BaseController<TObject> : Controller where TObject : IObject
     {
         #region Fields

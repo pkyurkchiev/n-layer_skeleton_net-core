@@ -8,10 +8,6 @@
         public DbSet<User> Users { get; set; }
         
         public NTSContext() : base() { }
-        //public NTSContext(DbContextOptions<NTSContext> options)
-        //    : base(options)
-        //{
-        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

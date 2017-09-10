@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NTS.ApplicationServices.Authentifications.Services;
@@ -72,7 +73,7 @@ namespace NTS.WebServices
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -80,6 +81,11 @@ namespace NTS.WebServices
             }
 
             app.UseStaticFiles();
+
+            //ILogger - log to local file
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            loggerFactory.AddFile("C:/Logs/NTS-{Date}.txt");
 
             // Add JWT generation endpoint:
             var signingKey = new SymmetricSecurityKey(secretKey);
@@ -90,36 +96,9 @@ namespace NTS.WebServices
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
             };
 
+            app.UseMiddleware<ApplicationServices.ExceptionHandler.ExceptionMiddleware>();
+
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
-
-            //var tokenValidationParameters = new TokenValidationParameters
-            //{
-            //    // The signing key must match!
-            //    ValidateIssuerSigningKey = true,
-            //    IssuerSigningKey = signingKey,
-
-            //    // Validate the JWT Issuer (iss) claim
-            //    ValidateIssuer = true,
-            //    ValidIssuer = "ExampleIssuer",
-
-            //    // Validate the JWT Audience (aud) claim
-            //    ValidateAudience = true,
-            //    ValidAudience = "ExampleAudience",
-
-            //    // Validate the token expiry    
-            //    ValidateLifetime = true,
-
-            //    // If you want to allow a certain amount of clock drift, set that here:
-            //    ClockSkew = TimeSpan.Zero
-            //};
-
-            //app.UseJwtBearerAuthentication(new JwtBearerOptions()
-            //{
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true,
-            //    TokenValidationParameters = tokenValidationParameters
-            //});
-
             app.UseAuthentication();
 
             app.UseMvc();

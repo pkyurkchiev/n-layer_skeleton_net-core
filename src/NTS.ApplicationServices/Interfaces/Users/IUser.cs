@@ -2,6 +2,5 @@
 {
     public interface IUser : IObject
     {
-        int Id { get; set; }
     }
 }

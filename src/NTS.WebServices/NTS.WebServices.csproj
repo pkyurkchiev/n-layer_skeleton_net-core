@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NTS.ApplicationServices\NTS.ApplicationServices.csproj" />
-    <ProjectReference Include="..\NTS.Data\NTS.Data.csproj" />
+    <ProjectReference Include="..\NTS.Utils\NTS.Utils.csproj" />
   </ItemGroup>
 
 </Project>
