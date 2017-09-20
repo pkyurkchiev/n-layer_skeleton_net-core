@@ -1,5 +1,5 @@
 # Introduction for N-Layer skeleton for .Net Core
-
+This repository is a part of a backbone for starter projects
 
 ### Repository pattern
 Mediates between the domain and data mapping layers, acting like an in-memory collection of domain objects
