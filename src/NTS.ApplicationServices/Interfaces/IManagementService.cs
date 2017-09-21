@@ -4,13 +4,13 @@
 
     public interface IManagementService<TObject> : IService where TObject : IObject
     {
-        void Save(TObject item);
-
-        void Delete(int id);
-
         TObject GetById(int id);
 
         IEnumerable<TObject> GetAll();
+
+        int Save(TObject item);
+
+        int Delete(int id);
 
         //IPagedList<TObject> Find(TFilter filters, PagerVM pager);
 

@@ -39,7 +39,8 @@
         [HttpPost]
         public virtual JsonResult Post(TObject model)
         {
-            _managementService.Save(model);
+            if(_managementService.Save(model) == -1)
+                throw new BusinessException(BusinessExceptionEnum.NotSaveObject.GetDescription());
 
             return Json(null);
         }
@@ -51,7 +52,8 @@
             if (model.Id.IsAnyNullOrEmpty())
                 throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
 
-            _managementService.Save(model);
+            if(_managementService.Save(model) == -1)
+                throw new BusinessException(BusinessExceptionEnum.NotUpdateObject.GetDescription());
 
             return Json(null);
         }
@@ -65,7 +67,8 @@
             if (model == null)
                 throw new BusinessException(BusinessExceptionEnum.NotFoundException.GetDescription());
 
-            _managementService.Delete(id);
+            if(_managementService.Delete(id) == -1)
+                throw new BusinessException(BusinessExceptionEnum.NotDeleteObject.GetDescription());
 
             return Json(null);
         }

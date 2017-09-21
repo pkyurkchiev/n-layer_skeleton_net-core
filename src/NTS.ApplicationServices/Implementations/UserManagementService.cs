@@ -54,23 +54,26 @@
 
         }
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             try
             {
                 _unitOfWork.Users.Delete(id);
                 _unitOfWork.SaveChanges();
+
+                return id;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                return -1;
             }
 
         }
 
-        public void Save(IUser item)
+        public int Save(IUser item)
         {
-            User user = null;//_mapper.Map<EditUserVM, User>((EditUserVM)item);
+            User user = _mapper.Map<UserVM, User>((UserVM)item);
 
             try
             {
@@ -85,10 +88,13 @@
                 }
 
                 _unitOfWork.SaveChanges();
+
+                return user.Id;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                return -1;
             }
 
         }
