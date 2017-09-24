@@ -54,6 +54,22 @@
 
         }
 
+        public int ActivateDeactivate(int id)
+        {
+            try
+            {
+                _unitOfWork.Users.ActivateDeactivate(id);
+                _unitOfWork.SaveChanges();
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return -1;
+            }
+        }
+
         public int Delete(int id)
         {
             try
