@@ -1,6 +1,8 @@
 ﻿namespace NTS.Repositories.Interfaces
 {
-    public interface IUserRepository
+    using Data.Entities;
+
+    public interface IUserRepository : IRepository<User>
     {
     }
 }

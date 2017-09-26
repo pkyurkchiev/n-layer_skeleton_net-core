@@ -9,6 +9,8 @@
 
         IEnumerable<TObject> GetAll();
 
+        int ActivateDeactivate(int id);
+
         int Save(TObject item);
 
         int Delete(int id);

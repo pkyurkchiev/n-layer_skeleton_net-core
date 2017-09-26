@@ -46,6 +46,10 @@
 
         public virtual void Insert(T entity)
         {
+
+            //entity.CreatedBy = ;
+            entity.CreatedOn = DateTime.Now;
+
             EntityEntry<T> entry = this.Context.Entry(entity);
             if (entry.State != EntityState.Detached)
             {
@@ -57,8 +61,11 @@
             }
         }
 
-        public virtual void Update(T entity)
+        public virtual void Update(T entity, string excludeProperties = "")
         {
+            //entity.UpdatedBy = ;
+            entity.UpdatedOn = DateTime.Now;
+
             EntityEntry<T> entry = this.Context.Entry(entity);
             if (entry.State == EntityState.Detached)
             {
@@ -66,6 +73,16 @@
             }
 
             entry.State = EntityState.Modified;
+
+            entry.Property("CreatedBy").IsModified = false;
+            entry.Property("CreatedOn").IsModified = false;
+
+            foreach (var excludeProperty in excludeProperties.Split
+                        (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                entry.Property(excludeProperty).IsModified = false;
+            }
+
         }
 
         public virtual void Save(T entity)
@@ -76,19 +93,19 @@
                 this.Update(entity);
         }
 
-        public virtual void SoftDelete(T entity)
+        public virtual void ActivateDeactivate(T entity)
         {
-            entity.IsActive = false;
+            entity.IsActive = !entity.IsActive;
             this.Update(entity);
         }
 
-        public virtual void SoftDelete(object id)
+        public virtual void ActivateDeactivate(object id)
         {
             var entity = this.GetById(id);
 
             if (entity != null)
             {
-                entity.IsActive = false;
+                entity.IsActive = !entity.IsActive;
                 this.Update(entity);
             }
         }

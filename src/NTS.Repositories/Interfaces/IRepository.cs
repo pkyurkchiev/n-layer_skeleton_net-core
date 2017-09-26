@@ -15,11 +15,11 @@
 
         void Insert(T entity);
 
-        void Update(T entity);
+            void Update(T entity, string excludeProperties = "");
 
-        void SoftDelete(T entity);
+            void ActivateDeactivate(T entity);
 
-        void SoftDelete(object id);
+            void ActivateDeactivate(object id);
 
         void Delete(object id);
 
