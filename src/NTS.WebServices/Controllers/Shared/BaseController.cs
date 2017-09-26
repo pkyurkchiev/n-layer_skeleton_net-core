@@ -5,16 +5,24 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize]
-    public class BaseController<TObject> : Controller where TObject : IObject
+    public class BaseController<TObject, TFilter> 
+        : Controller where TObject : IObject where TFilter : class
     {
         #region Fields
-        public IManagementService<TObject> _managementService;
+        public IManagementService<TObject, TFilter> _managementService;
         #endregion
 
         #region Constructors
-        public BaseController(IManagementService<TObject> managementService)
+        public BaseController(IManagementService<TObject, TFilter> managementService)
         {
             _managementService = managementService;
+        }
+        #endregion
+
+        #region Public Methods
+        public virtual ActionResult Index()
+        {
+            return View();
         }
         #endregion
     }

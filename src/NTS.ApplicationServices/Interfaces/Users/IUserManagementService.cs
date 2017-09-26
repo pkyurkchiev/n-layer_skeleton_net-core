@@ -1,6 +1,8 @@
 ﻿namespace NTS.ApplicationServices.Interfaces.Users
 {
-    public interface IUserManagementService : IManagementService<IUser>
+    using ViewModels.Users;
+
+    public interface IUserManagementService : IManagementService<IUser, FilterUserVM>
     {
     }
 }

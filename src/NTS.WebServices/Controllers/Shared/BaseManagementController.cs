@@ -7,11 +7,11 @@
     using System.Collections.Generic;
     using Utils.Extensions;
 
-    public class BaseManagementController<TObject> 
-        : BaseController<TObject> where TObject : IObject
+    public class BaseManagementController<TObject, TFilter> 
+        : BaseController<TObject, TFilter> where TObject : IObject where TFilter : class
     {
         #region Constructors
-        public BaseManagementController(IManagementService<TObject> managementService) 
+        public BaseManagementController(IManagementService<TObject, TFilter> managementService) 
             : base(managementService) { }
         #endregion
 
@@ -39,10 +39,11 @@
         [HttpPost]
         public virtual JsonResult Post(TObject model)
         {
-            if(_managementService.Save(model) == -1)
+            int result = _managementService.Save(model);
+            if (result == -1)
                 throw new BusinessException(BusinessExceptionEnum.NotSaveObject.GetDescription());
 
-            return Json(null);
+            return Json(result);
         }
 
         // PUT: api/[controller]
@@ -52,10 +53,11 @@
             if (model.Id.IsAnyNullOrEmpty())
                 throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
 
-            if(_managementService.Save(model) == -1)
+            int result = _managementService.Save(model);
+            if (result == -1)
                 throw new BusinessException(BusinessExceptionEnum.NotUpdateObject.GetDescription());
 
-            return Json(null);
+            return Json(result);
         }
 
         // DELETE: api/[controller]/5
@@ -67,10 +69,11 @@
             if (model == null)
                 throw new BusinessException(BusinessExceptionEnum.NotFoundException.GetDescription());
 
-            if(_managementService.Delete(id) == -1)
+            int result = _managementService.Delete(id);
+            if (result == -1)
                 throw new BusinessException(BusinessExceptionEnum.NotDeleteObject.GetDescription());
 
-            return Json(null);
+            return Json(result);
         }
 
         // GET api/[controller]/version

@@ -5,10 +5,11 @@
     using Interfaces;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using NTS.Utils.Extensions;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using Utils.Extensions;
 
     public class Repository<T> : IRepository<T> where T : Entity, IIsActive
     {
@@ -20,7 +21,7 @@
         }
 
         #endregion
-        
+
         #region Properties
 
         protected DbSet<T> DbSet { get; set; }
@@ -135,7 +136,7 @@
         /// <param name="includeProperties">Represents some additional properties of the objects that can be included in the list</param>
         /// <param name="isActive">Represents only active or unactive user</param>
         /// <returns>Returns a list of object of a certain class - all of them or filtered by some cretiria</returns>
-        public virtual IQueryable<T> Find(Expression<Func<T, bool>> where = null,
+        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> where = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending = null, string includeProperties = "", bool isActive = true)
         {
             var query = this.DbSet.AsQueryable();
@@ -158,15 +159,55 @@
 
             return SoftDeleteQueryFilter(query, isActive);
         }
+
+        /// <summary>
+        /// Represents a method that returns a list of objects of a certain class. 
+        /// The method can return a list of all objects or only the objects filtered by some condition
+        /// </summary>
+        /// <param name="currentPage">Represents the start page of the pager</param>
+        /// <param name="itemsPerPage">Represents the number of items that will be shown on each of the pages</param>
+        /// <param name="filter">Represent a filter that can be used for filtering items by some criteria</param>
+        /// <param name="OrderByDescending">Represents the order of the items on each of the pages - in this case - descending</param>
+        /// <param name="includeProperties">Represents some additional properties of the objects that can be included in the list</param>
+        /// <param name="isActive">Represents only active or unactive user</param>
+        /// <returns>Returns a list of object of a certain class - all of them or filtered by some cretiria</returns>
+        public IEnumerable<T> Find(int currentPage = 0, int itemsPerPage = 0, Expression<Func<T, bool>> where = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending = null, string includeProperties = "", bool? isActive = true)
+        {
+            var query = this.DbSet.AsQueryable();
+
+            if (where != null)
+            {
+                query = query.Where(where);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (OrderByDescending != null)
+            {
+                query = OrderByDescending(query);
+            }
+
+            if (OrderByDescending == null)
+            {
+                query = query.OrderByDescending(i => i.CreatedOn);
+            }
+
+            return SoftDeleteQueryFilter(query, isActive).ToList();//ToPagedList(currentPage, itemsPerPage);
+        }
         #endregion
 
         //TODO async methods
 
         #region Private Methods
 
-        private IQueryable<T> SoftDeleteQueryFilter(IQueryable<T> query, bool isActive)
+        private IQueryable<T> SoftDeleteQueryFilter(IQueryable<T> query, bool? isActive)
         {
-            query = query.Where(x => x.IsActive);
+            if (isActive.HasValue) query = query.Where(x => x.IsActive == isActive.Value);
             return query;
         }
 

@@ -1,8 +1,9 @@
 ﻿namespace NTS.ApplicationServices.Interfaces
 {
     using System.Collections.Generic;
+    using ViewModels;
 
-    public interface IManagementService<TObject> : IService where TObject : IObject
+    public interface IManagementService<TObject, TFilter> : IService where TObject : IObject where TFilter : class
     {
         TObject GetById(int id);
 
@@ -12,7 +13,7 @@
 
         int Delete(int id);
 
-        //IPagedList<TObject> Find(TFilter filters, PagerVM pager);
+        IEnumerable<TObject> Find(TFilter filters, PagerVM pager);
 
     }
 }
