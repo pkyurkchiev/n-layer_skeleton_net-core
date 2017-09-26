@@ -1,11 +1,9 @@
 ﻿namespace NTS.Repositories.Implementations
 {
-    using Data.Entities;
-    using Data.Entities.Interfaces;
-    using System;
-    using System.Collections.Generic;
     using Interfaces;
     using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
 
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
@@ -21,19 +19,15 @@
         public UnitOfWork(DbContext context)
         {
             this.context = context;
+
+            Users = new UserRepository(context);
         }
 
         #endregion
 
         #region Methods
 
-        public IRepository<User> Users
-        {
-            get
-            {
-                return this.GetRepository<User>();
-            }
-        }
+        public IUserRepository Users { get; private set; }
 
         public DbContext Context
         {
@@ -63,23 +57,6 @@
                 }
             }
         }
-
-        #endregion
-
-        #region Private Methods
-
-        private IRepository<T> GetRepository<T>() where T : Entity, IIsActive
-        {
-            if (!this.repositories.ContainsKey(typeof(T)))
-            {
-                var type = typeof(Repository<T>);
-
-                this.repositories.Add(typeof(T), Activator.CreateInstance(type, this.context));
-            }
-
-            return (IRepository<T>)this.repositories[typeof(T)];
-        }
-
         #endregion
     }
 

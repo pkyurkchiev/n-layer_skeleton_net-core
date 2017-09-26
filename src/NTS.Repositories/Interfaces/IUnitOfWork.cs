@@ -1,14 +1,13 @@
 ﻿namespace NTS.Repositories.Interfaces
 {
-    using System;
-    using Data.Entities;
     using Microsoft.EntityFrameworkCore;
+    using System;
 
     public interface IUnitOfWork : IDisposable
     {
         DbContext Context { get; }
 
-        IRepository<User> Users { get; }
+        IUserRepository Users { get; }
 
         int SaveChanges();
 
