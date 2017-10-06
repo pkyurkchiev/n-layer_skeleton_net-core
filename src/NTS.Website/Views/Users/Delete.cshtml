@@ -1,0 +1,48 @@
+﻿@model NTS.ApplicationServices.ViewModels.Users.UserVM
+
+<h2>Are you sure you want to delete the record?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <a href="/Users/Index">
+                <i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i>
+                <span>Users</span>
+            </a> |
+            <button type="submit" class="btn btn-danger">
+                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                <span>Delete</span>
+            </button>
+        </div>
+    }
+</div>

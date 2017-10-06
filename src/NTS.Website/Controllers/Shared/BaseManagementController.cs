@@ -1,19 +1,19 @@
 ﻿namespace NTS.Website.Controllers.Shared
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
+    using NTS.ApplicationServices.ExceptionHandler.Enums;
+    using NTS.ApplicationServices.ExceptionHandler.Exceptions;
     using NTS.ApplicationServices.Interfaces;
     using NTS.ApplicationServices.ViewModels;
-    using NTS.ApplicationServices.ExceptionHandler.Exceptions;
-    using NTS.ApplicationServices.ExceptionHandler.Enums;
     using NTS.Utils.Extensions;
-    using AutoMapper;
-    using Microsoft.Extensions.DependencyInjection;
+    using System;
+    using System.Collections.Generic;
+    using X.PagedList;
 
-    public class BaseManagementController<TObject, TList, TEdit, TFilter> : BaseController where TObject : IObject where TList : ListVM<TFilter>, new() where TEdit : BaseVM, TObject, new() where TFilter : class
+    public class BaseManagementController<TObject, TList, TEdit, TFilter> 
+        : BaseController where TObject : IObject where TList : ListVM<TFilter>, new() where TEdit : BaseVM, TObject, new() where TFilter : class
     {
         #region Fields
         protected const string listViewName = "Index";
@@ -159,7 +159,7 @@
             _managementService.Delete(id.Value);
         }
 
-        protected virtual TList PrepareModelForList(TList model, IEnumerable<TObject> collection, PagerVM pager)
+        protected virtual TList PrepareModelForList(TList model, IPagedList<TObject> collection, PagerVM pager)
         {
             return model;
         }

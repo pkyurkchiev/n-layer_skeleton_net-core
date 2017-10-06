@@ -1,11 +1,11 @@
 ﻿namespace NTS.ApplicationServices.ViewModels.Users
 {
-    using System.Collections.Generic;
+    using X.PagedList;
 
     public class ListUserVM : ListVM<FilterUserVM>
     {
         #region Properties
-        public IEnumerable<UserVM> Users { get; set; }
+        public IPagedList<UserVM> Users { get; set; }
         #endregion
 
         #region Constructors

@@ -11,37 +11,15 @@ using System;
 namespace NTS.Data.Migrations
 {
     [DbContext(typeof(NTSContext))]
-    partial class NTSContextModelSnapshot : ModelSnapshot
+    [Migration("20171002102441_NewColumn")]
+    partial class NewColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("NTS.Data.Entities.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedOn");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50);
-
-                    b.Property<int>("UpdatedBy");
-
-                    b.Property<DateTime?>("UpdatedOn");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
 
             modelBuilder.Entity("NTS.Data.Entities.User", b =>
                 {
@@ -62,8 +40,6 @@ namespace NTS.Data.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<int?>("RoleId");
-
                     b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime?>("UpdatedOn");
@@ -72,16 +48,7 @@ namespace NTS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("NTS.Data.Entities.User", b =>
-                {
-                    b.HasOne("NTS.Data.Entities.Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId");
                 });
 #pragma warning restore 612, 618
         }

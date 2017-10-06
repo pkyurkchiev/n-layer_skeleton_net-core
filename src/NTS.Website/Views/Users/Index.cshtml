@@ -1,0 +1,157 @@
+﻿@model NTS.ApplicationServices.ViewModels.Users.ListUserVM
+
+@{
+    ViewData["Title"] = !Model.Filters.IsActiveDisplayed ? "Users" : "Unactive users";
+    string pageSearchTemplate = Url.Action(Model.Pager.Action, Model.Pager.Controller);
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+@using (Html.BeginForm(Model.Pager.Action, Model.Pager.Controller, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <a href="Users/Create" class="margin-right-5">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                    <span>Create</span>
+                    @*</a> |
+                        <a href="ExportToExcel" class="margin-left-5">
+                            <i class="glyphicon glyphicon-export" aria-hidden="true"></i>
+                            <span>Експорт</span>*@
+                </a>
+            </div>
+            <div class="col-md-10">
+                <a data-toggle="collapse" href="#collapseExample" aria-controls="collapseExample" class="pull-right">
+                    <i class="glyphicon glyphicon-filter"></i>Filters
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="collapse @(Model.Filters.IsActive ? "in" : String.Empty)" id="collapseExample">
+                <div class="card card-block">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.Filters.Name, "Name", new { @class = "control-label" })
+                                <div>
+                                    @Html.TextBoxFor(model => model.Filters.Name, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                    <div class="checkbox-margin-spacing">
+                                        @Html.CheckBoxFor(model => model.Filters.IsActiveDisplayed, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.LabelFor(model => model.Filters.IsActiveDisplayed, "Show inactive", new { @class = "control-label" })
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                    <span>Search</span>
+                                </button>
+                                <button type="reset" class="btn btn-default"
+                                        onclick="location.href = '@pageSearchTemplate'">
+                                    <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i>
+                                    <span>Clean</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 50px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    if (Model.Users.Count == 0)
+    {
+        <div class="alert alert-info">No users available.</div>
+    }
+    else
+    {
+        <table id="Users" class="table table-striped table-hover table-bordered" style="border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th class="text-center col-md-2">
+                        @Html.DisplayNameFor(model => model.Users[0].FirstName)
+                    </th>
+                    <th class="text-center col-md-2">
+                        @Html.DisplayNameFor(model => model.Users[0].LastName)
+                    </th>
+                    <th class="text-center col-md-3">
+                        @Html.DisplayNameFor(model => model.Users[0].UserName)
+                    </th>
+                    <th class="text-center col-md-3">
+                        @Html.DisplayNameFor(model => model.Users[0].RoleId)
+                    </th>
+                    <th class="col-md-2"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.Users)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit margin-right-5" data-toggle="tooltip" data-placement="top" title="Editing">
+                                <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+                            </a>|
+
+                            @if (!Model.Filters.IsActiveDisplayed)
+                            {
+                                <a href="#" class="btn-action btn-delete margin-left-5 margin-right-5" data-toggle="modal" data-target="#modal-soft-delete-confirmation" data-url="/Users/ActivateDeactivate/@item.Id" data-additionalinfo="" data-placement="top" title="Deactivate">
+                                    <i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="btn-action btn-edit margin-left-5 margin-right-5" data-toggle="modal" data-target="#modal-reactivate-confirmation" data-url="/Users/ActivateDeactivate/@item.Id" data-additionalinfo="" data-placement="top" title="Activate">
+                                    <i class="glyphicon glyphicon-check" aria-hidden="true"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @Html.Partial(partialViewName: "~/Views/Shared/PartialViews/_PagingPartial.cshtml", model: Model.Users,
+                viewData: new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(), new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "action", Model.Pager.Action }, { "controller", Model.Pager.Controller },
+                                                    { "params", new Dictionary<string, string> { { "Filters.Name", Model.Filters.Name } } } })
+}
+
+@section FooterSection {
+    @Html.Partial("~/Views/Shared/PartialViews/_SoftDeleteConfirmation.cshtml")
+    @Html.Partial("~/Views/Shared/PartialViews/_ReactivateConfirmation.cshtml")
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.btn-edit').tooltip();
+            $('.btn-delete').tooltip();
+        });
+    </script>
+}

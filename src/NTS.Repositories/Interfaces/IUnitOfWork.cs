@@ -9,6 +9,8 @@
 
         IUserRepository Users { get; }
 
+        IRoleRepository Roles { get; }
+
         int SaveChanges();
 
     }

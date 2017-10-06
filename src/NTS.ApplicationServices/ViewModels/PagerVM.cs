@@ -17,21 +17,25 @@
         #endregion
 
         #region Constructors
-        public PagerVM(string action, string controller) : this()
+        public PagerVM(string action, string controller, int pageSize = 10) : this(0, 1, pageSize)
         {
             Action = action;
             Controller = controller;
         }
 
-        public PagerVM() : this(0, 1, 0) { }
+        public PagerVM() : this(0, 1, 10) { }
 
         public PagerVM(int totalItems, int? page, int pageSize)
         {
-            if (pageSize == 0) pageSize = 10;
-
             CurrentPage = page ?? 1;
             PageSize = pageSize;
             PageSizeList = new SelectList(new int[] { 10, 20, 50, 100 });
+        }
+
+        public PagerVM(SelectList pageSizeList)
+            : this()
+        {
+            PageSizeList = pageSizeList ?? new SelectList(new int[] { 10, 20, 50, 100 });
         }
         #endregion
     }

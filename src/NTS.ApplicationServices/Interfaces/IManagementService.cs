@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using ViewModels;
+    using X.PagedList;
 
     public interface IManagementService<TObject, TFilter> : IService where TObject : IObject where TFilter : class
     {
@@ -15,7 +16,7 @@
 
         int Delete(int id);
 
-        IEnumerable<TObject> Find(TFilter filters, PagerVM pager);
+        IPagedList<TObject> Find(TFilter filters, PagerVM pager);
 
     }
 }

@@ -10,8 +10,8 @@
             services.AddDbContextConnector();
 
             services.AddScoped<Interfaces.IUnitOfWork, Implementations.UnitOfWork>();
-            services.AddTransient<Interfaces.IUserRepository,
-                Implementations.UserRepository>();
+            services.AddTransient<Interfaces.IUserRepository, Implementations.UserRepository>();
+            services.AddTransient<Interfaces.IRoleRepository, Implementations.RoleRepository>();
 
             return services;
         }

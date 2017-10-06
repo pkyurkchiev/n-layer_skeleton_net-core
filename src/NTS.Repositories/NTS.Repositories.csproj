@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="X.PagedList" Version="7.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NTS.Data\NTS.Data.csproj" />
     <ProjectReference Include="..\NTS.Utils\NTS.Utils.csproj" />
   </ItemGroup>

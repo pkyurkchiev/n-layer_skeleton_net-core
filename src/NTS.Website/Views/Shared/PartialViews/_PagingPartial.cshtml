@@ -1,0 +1,43 @@
+﻿@using X.PagedList.Mvc.Core;
+
+@model X.PagedList.IPagedList
+
+@{
+    string pageSizeTemplate = Url.Action(ViewData["action"].ToString(), ViewData["controller"].ToString()) + "?";
+    SelectList pageSizeList = ViewData["pageSizeList"] == null ? null : new SelectList(ViewData["pageSizeList"] as int[]);
+
+    foreach (var item in ViewData["params"] as IDictionary<string, string>)
+    {
+        if (!String.IsNullOrEmpty(item.Value)) { pageSizeTemplate += item.Key + "=" + item.Value + "&"; }
+    }
+}
+
+@Html.HiddenFor(model => model.PageNumber)
+@Html.HiddenFor(model => model.PageSize)
+
+<div class="row">
+    <div class="col-md-2">
+        Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) от @Model.PageCount
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        @Html.PagedListPager(Model, page => pageSizeTemplate + "Pager.CurrentPage=" + page + "&" + "Pager.PageSize=" + Model.PageSize, PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+    <div class="col-md-1 col-md-offset-7" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="dropdown page-size-dropdown-spacing">
+            <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                @Model.PageSize
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                @foreach (var item in new NTS.ApplicationServices.ViewModels.PagerVM(pageSizeList).PageSizeList)
+                {
+                    <li>
+                        <a href="@pageSizeTemplate@("Pager.CurrentPage=1")&@("Pager.PageSize=" + item.Text)">@item.Text</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

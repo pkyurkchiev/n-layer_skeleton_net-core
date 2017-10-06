@@ -10,7 +10,9 @@
             services.AddRepositoryConnector();
 
             services.AddTransient<Interfaces.Users.IUserManagementService,
-                Implementations.UserManagementService>();
+                Implementations.Users.UserManagementService>();
+            services.AddTransient<Interfaces.Roles.IRoleManagementService,
+                Implementations.Roles.RoleManagementService>();
 
             return services;
         }

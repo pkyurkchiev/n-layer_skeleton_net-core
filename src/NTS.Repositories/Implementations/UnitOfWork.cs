@@ -21,11 +21,14 @@
             this.context = context;
 
             Users = new UserRepository(context);
+            Roles = new RoleRepository(context);
         }
 
         #endregion
 
         #region Methods
+
+        public IRoleRepository Roles { get; private set; }
 
         public IUserRepository Users { get; private set; }
 

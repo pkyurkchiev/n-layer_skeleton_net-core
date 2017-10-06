@@ -1,4 +1,4 @@
-﻿namespace NTS.ApplicationServices.Implementations
+﻿namespace NTS.ApplicationServices.Implementations.Users
 {
     using Data.Entities;
     using Interfaces.Users;
@@ -11,6 +11,7 @@
     using Utils.Extensions;
     using ViewModels;
     using ViewModels.Users;
+    using X.PagedList;
 
     public class UserManagementService : BaseService, IUserManagementService
     {
@@ -38,15 +39,15 @@
 
         }
 
-        public IEnumerable<IUser> Find(FilterUserVM filters, PagerVM pager)
+        public IPagedList<IUser> Find(FilterUserVM filters, PagerVM pager)
         {
-            IEnumerable<UserVM> allUsers = null;
+            IPagedList<UserVM> allUsers = null;
             Expression<Func<User, bool>> filter = null;
 
             try
             {
                 if (!String.IsNullOrEmpty(filters.Name)) filter = x => x.FirstName.Contains(filters.Name);
-                allUsers = _mapper.Map<IEnumerable<User>, IEnumerable<UserVM>>(
+                allUsers = _mapper.Map<IPagedList<User>, IPagedList<UserVM>>(
                     _unitOfWork.Users.Find(pager.CurrentPage, pager.PageSize, filter, null, String.Empty, !filters.IsActiveDisplayed));
             }
             catch (Exception ex)

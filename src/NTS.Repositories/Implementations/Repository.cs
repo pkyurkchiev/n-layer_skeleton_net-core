@@ -10,6 +10,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using Utils.Extensions;
+    using X.PagedList;
 
     public class Repository<T> : IRepository<T> where T : Entity, IIsActive
     {
@@ -188,7 +189,7 @@
         /// <param name="includeProperties">Represents some additional properties of the objects that can be included in the list</param>
         /// <param name="isActive">Represents only active or unactive user</param>
         /// <returns>Returns a list of object of a certain class - all of them or filtered by some cretiria</returns>
-        public IEnumerable<T> Find(int currentPage = 0, int itemsPerPage = 0, Expression<Func<T, bool>> where = null,
+        public IPagedList<T> Find(int currentPage = 0, int itemsPerPage = 0, Expression<Func<T, bool>> where = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending = null, string includeProperties = "", bool? isActive = true)
         {
             var query = this.DbSet.AsQueryable();
@@ -214,7 +215,7 @@
                 query = query.OrderByDescending(i => i.CreatedOn);
             }
 
-            return SoftDeleteQueryFilter(query, isActive).ToList();//ToPagedList(currentPage, itemsPerPage);
+            return SoftDeleteQueryFilter(query, isActive).ToPagedList(currentPage, itemsPerPage);
         }
         #endregion
 

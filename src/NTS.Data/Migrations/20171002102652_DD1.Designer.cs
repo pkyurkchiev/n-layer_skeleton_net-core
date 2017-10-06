@@ -11,9 +11,10 @@ using System;
 namespace NTS.Data.Migrations
 {
     [DbContext(typeof(NTSContext))]
-    partial class NTSContextModelSnapshot : ModelSnapshot
+    [Migration("20171002102652_DD1")]
+    partial class DD1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

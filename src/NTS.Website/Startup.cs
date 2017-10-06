@@ -6,14 +6,23 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using NTS.ApplicationServices.Packagess;
 
 namespace NTS.Website
 {
     public class Startup
     {
+        private MapperConfiguration _mapperConfiguration { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new ApplicationServicesAMConfiguration());
+            });
         }
 
         public IConfiguration Configuration { get; }
@@ -21,6 +30,9 @@ namespace NTS.Website
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInternalServices();
+            services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
+
             services.AddMvc();
         }
 

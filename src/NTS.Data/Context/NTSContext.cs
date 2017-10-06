@@ -6,7 +6,8 @@
     public class NTSContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        
+        public DbSet<Role> Roles { get; set; }
+
         public NTSContext() : base() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
