@@ -12,12 +12,12 @@
     }
 }
 
-@Html.HiddenFor(model => model.PageNumber)
-@Html.HiddenFor(model => model.PageSize)
+<input asp-for="@Model.PageNumber" type="hidden" />
+<input asp-for="@Model.PageSize" type="hidden" />
 
 <div class="row">
     <div class="col-md-2">
-        Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) от @Model.PageCount
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) - @Model.PageCount
     </div>
 </div>
 <div class="row">

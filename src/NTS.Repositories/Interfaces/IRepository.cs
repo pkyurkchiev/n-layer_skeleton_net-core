@@ -16,11 +16,11 @@
 
         void Insert(T entity);
 
-            void Update(T entity, string excludeProperties = "");
+        void Update(T entity, string excludeProperties = "");
 
-            void ActivateDeactivate(T entity);
+        void ActivateDeactivate(T entity);
 
-            void ActivateDeactivate(object id);
+        void ActivateDeactivate(object id);
 
         void Delete(object id);
 

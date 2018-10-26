@@ -12,7 +12,7 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=N-TierSkeleton;Integrated Security=SSPI");
+            optionsBuilder.UseSqlServer(@"Server=100.104.136.140,1400;initial catalog=N-TierSkeleton;User ID=SA;Password=!Passw0rd;");//@"Data Source=.\SQLEXPRESS;Initial Catalog=N-TierSkeleton;Integrated Security=SSPI");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,32 +6,30 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            <label asp-for="@Model.FirstName"></label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Model.FirstName
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            <label asp-for="@Model.LastName"></label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Model.LastName
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
+            <label asp-for="@Model.UserName"></label>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UserName)
+            @Model.UserName
         </dd>
     </dl>
-
-    @using (Html.BeginForm())
-    {
+    <form asp-controller="Users" asp-action="Delete" method="post" role="form">
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -44,5 +42,5 @@
                 <span>Delete</span>
             </button>
         </div>
-    }
+    </form>
 </div>

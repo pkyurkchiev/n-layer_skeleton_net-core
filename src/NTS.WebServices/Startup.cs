@@ -2,15 +2,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NTS.ApplicationServices.Authentifications.Services;
 using NTS.ApplicationServices.Packagess;
-using NTS.Data.Context;
+using NTS.WebServices.Authentifications.Services;
 using System;
 using System.Text;
 

@@ -17,14 +17,12 @@
         [Key]
         public int Id { get; set; }
 
-        public int CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
+        
+        public DateTime? CreatedOn { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime CreatedOn { get; set; }
-
-        public int UpdatedBy { get; set; }
-
-        [DataType(DataType.DateTime)]
+        public int? UpdatedBy { get; set; }
+        
         public DateTime? UpdatedOn { get; set; }
 
         #endregion

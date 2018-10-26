@@ -19,7 +19,9 @@
         [Description("Update Exception.")]
         NotUpdateObject,
         [Description("Delete Exception.")]
-        NotDeleteObject
+        NotDeleteObject,
+        [Description("Unknown Exception.")]
+        UnknownException
     }
 
 }

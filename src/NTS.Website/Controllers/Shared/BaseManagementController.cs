@@ -9,7 +9,6 @@
     using NTS.ApplicationServices.ViewModels;
     using NTS.Utils.Extensions;
     using System;
-    using System.Collections.Generic;
     using X.PagedList;
 
     public class BaseManagementController<TObject, TList, TEdit, TFilter> 
@@ -78,7 +77,7 @@
 
             var viewModel = _managementService.GetById(id.Value);
 
-            if (viewModel == null) throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
+            if (viewModel == null) throw new BusinessException(BusinessExceptionEnum.UnknownException.GetDescription());
 
             return View(EditViewName, viewModel);
         }
@@ -99,7 +98,7 @@
 
             var viewModel = _managementService.GetById(id.Value);
 
-            if (viewModel == null) throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
+            if (viewModel == null) throw new BusinessException(BusinessExceptionEnum.UnknownException.GetDescription());
 
             return View(DeleteViewName, viewModel);
         }
@@ -166,7 +165,7 @@
         #endregion
 
         #region Private Methods
-        private TList GenerateTList()
+        protected TList GenerateTList()
         {
             return new TList
             {

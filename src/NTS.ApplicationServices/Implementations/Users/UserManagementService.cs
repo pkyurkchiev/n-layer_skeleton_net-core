@@ -46,9 +46,9 @@
 
             try
             {
-                if (!String.IsNullOrEmpty(filters.Name)) filter = x => x.FirstName.Contains(filters.Name);
+                if (!string.IsNullOrEmpty(filters.Name)) filter = x => x.FirstName.Contains(filters.Name);
                 allUsers = _mapper.Map<IPagedList<User>, IPagedList<UserVM>>(
-                    _unitOfWork.Users.Find(pager.CurrentPage, pager.PageSize, filter, null, String.Empty, !filters.IsActiveDisplayed));
+                    _unitOfWork.Users.Find(pager.CurrentPage, pager.PageSize, filter, null, "Role", !filters.IsActiveDisplayed));
             }
             catch (Exception ex)
             {
@@ -115,14 +115,14 @@
 
             try
             {
-                if (item.Id.IsAnyNullOrEmpty())
+                if (item.Id == 0)
                 {
                     user.Password = EncryptionUtils.ToSHA512(user.Password);
                     _unitOfWork.Users.Insert(user);
                 }
                 else
                 {
-                    _unitOfWork.Users.Update(user);
+                    _unitOfWork.Users.Update(user, "Password");
                 }
 
                 _unitOfWork.SaveChanges();

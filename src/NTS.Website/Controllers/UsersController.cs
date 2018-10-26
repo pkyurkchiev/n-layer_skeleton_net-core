@@ -24,6 +24,7 @@
             _roleManagementService = roleManagementService;
         }
 
+        [HttpGet]
         public override IActionResult Create()
         {
             UserVM user = new UserVM
@@ -40,34 +41,45 @@
         {
             UserVM editUserVM = new UserVM();
             TryUpdateModelAsync(editUserVM);
+            editUserVM.Roles = _roleManagementService.GetAll();
 
-            if (String.IsNullOrEmpty(editUserVM.Password))
-            {
-                ModelState.AddModelError(String.Empty, "Полето за парола е задължително.");
-                editUserVM.Roles = _roleManagementService.GetAll();
-
-                return View(editUserVM);
-            }
-
-            if (!ModelState.IsValid) throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
-
-            _managementService.Save(editUserVM);
+            if (!ModelState.IsValid) return View(editUserVM);
+           
+            int userId = _managementService.Save(editUserVM);
+            if (userId == -1) throw new BusinessException(BusinessExceptionEnum.NotSaveObject.GetDescription());
 
             return RedirectToAction(ListViewName);
         }
 
+        [HttpGet]
         public override IActionResult Edit(int? id)
         {
             if (!id.HasValue) throw new BusinessException(BusinessExceptionEnum.NotFoundException.GetDescription());
 
-            var user = _managementService.GetById(id.Value);
-
-            if (user == null) throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
+            IUser user = _managementService.GetById(id.Value);
 
             UserVM editUserVM = _mapper.Map<IUser, UserVM>(user);
             editUserVM.Roles = _roleManagementService.GetAll();
 
             return View(EditViewName, editUserVM);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public override IActionResult EditConfirm()
+        {
+            UserVM editUserVM = new UserVM();
+            TryUpdateModelAsync(editUserVM);
+            editUserVM.Roles = _roleManagementService.GetAll();
+
+            ModelState.Remove("EmailConfirm");
+            ModelState.Remove("Password");
+            if (!ModelState.IsValid) return View(editUserVM);
+
+            int userId = _managementService.Save(editUserVM);
+            if (userId == -1) throw new BusinessException(BusinessExceptionEnum.NotSaveObject.GetDescription());
+
+            return RedirectToAction(ListViewName);
         }
 
         protected override ListUserVM PrepareModelForList(ListUserVM model, IPagedList<IUser> collection, PagerVM pager)

@@ -1,4 +1,4 @@
-﻿namespace NTS.ApplicationServices.Authentifications.Services
+﻿namespace NTS.WebServices.Authentifications.Services
 {
     using Microsoft.IdentityModel.Tokens;
     using System;

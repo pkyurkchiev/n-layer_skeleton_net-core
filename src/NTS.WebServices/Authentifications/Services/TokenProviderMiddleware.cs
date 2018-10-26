@@ -1,4 +1,4 @@
-﻿namespace NTS.ApplicationServices.Authentifications.Services
+﻿namespace NTS.WebServices.Authentifications.Services
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;

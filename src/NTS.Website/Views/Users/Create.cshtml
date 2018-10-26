@@ -6,67 +6,81 @@
 
 <h2>@ViewData["Title"]</h2>
 
-@using (Html.BeginForm("Create", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+<form asp-controller="Users" asp-action="Create" method="post" class="form-horizontal" role="form">
     @Html.AntiForgeryToken()
     <hr />
 
     <div class="form-group">
-        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <label asp-for="@Model.FirstName" class="col-md-2 control-label"></label>
         <div class="col-md-4">
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            <input asp-for="@Model.FirstName" class = "form-control" />
+            <span asp-validation-for="@Model.FirstName" class = "text-danger"></span>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <label asp-for="@Model.LastName" class="col-md-2 control-label"></label>
         <div class="col-md-4">
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            <input asp-for="@Model.LastName" class="form-control" />
+            <span asp-validation-for="@Model.LastName" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <label asp-for="@Model.UserName" class="col-md-2 control-label"></label>
         <div class="col-md-4">
-            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            <input asp-for="@Model.UserName" class="form-control" />
+            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <label asp-for="@Model.Email" class="col-md-2 control-label"></label>
         <div class="col-md-4">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            <input asp-for="@Model.Email" class="form-control" />
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <label asp-for="@Model.EmailConfirm" class="col-md-2 control-label"></label>
         <div class="col-md-4">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+            <input asp-for="@Model.EmailConfirm" class="form-control" />
+            <span asp-validation-for="@Model.EmailConfirm" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.RoleId, new { @class = "col-md-2 control-label" })
+        <label asp-for="@Model.Password" class="col-md-2 control-label"></label>
         <div class="col-md-4">
-            <select class="form-control" id="RoleId" name="RoleId">
+            <input asp-for="@Model.Password" class="form-control" />
+            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ConfirmPassword" class="col-md-2 control-label"></label>
+        <div class="col-md-4">
+            <input asp-for="@Model.ConfirmPassword" class="form-control" />
+            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.RoleId" class="col-md-2 control-label"></label>
+        <div class="col-md-4">
+            <select asp-for="@Model.RoleId" class="form-control">
                 @foreach (var role in Model.Roles)
                 {
                     <option id="role-@role.Id" value="@role.Id" @(role.Name == "User" ? "selected" : string.Empty)>@role.Name</option>
                 }
             </select>
-
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-offset-2 col-md-4">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger validation-summary-error-messages" })
+            <div asp-validation-summary="All" class="text-danger validation-summary-error-messages"></div>
         </div>
     </div>
 
@@ -78,8 +92,7 @@
             </button>
         </div>
     </div>
-}
-
+</form>
 <div>
     <a href="/Users/Index">
         <i class="glyphicon glyphicon-chevron-left" aria-hidden="true"></i>

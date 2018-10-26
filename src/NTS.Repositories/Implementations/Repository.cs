@@ -88,7 +88,7 @@
 
         public virtual void Save(T entity)
         {
-            if (entity.Id.IsAnyNullOrEmpty())
+            if (entity.Id == 0)
                 this.Insert(entity);
             else
                 this.Update(entity);

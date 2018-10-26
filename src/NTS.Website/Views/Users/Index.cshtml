@@ -8,8 +8,7 @@
 <h2>@ViewData["Title"]</h2>
 <hr />
 
-@using (Html.BeginForm(Model.Pager.Action, Model.Pager.Controller, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
-{
+<form asp-controller="@Model.Pager.Controller" asp-action="@Model.Pager.Action" method="get" class="form-horizontal" role="form">
     <div class="row">
         <div class="col-md-12">
             <div class="col-md-2">
@@ -33,22 +32,22 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="collapse @(Model.Filters.IsActive ? "in" : String.Empty)" id="collapseExample">
+            <div class="collapse @(Model.Filters.IsActive ? "in" : string.Empty)" id="collapseExample">
                 <div class="card card-block">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group col-md-4">
-                                @Html.LabelFor(model => model.Filters.Name, "Name", new { @class = "control-label" })
+                                <label asp-for="@Model.Filters.Name" class="control-label"></label>
                                 <div>
-                                    @Html.TextBoxFor(model => model.Filters.Name, new { @class = "form-control" })
+                                    <input asp-for="@Model.Filters.Name" class="form-control" />
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                    <div class="checkbox-margin-spacing">
-                                        @Html.CheckBoxFor(model => model.Filters.IsActiveDisplayed, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.LabelFor(model => model.Filters.IsActiveDisplayed, "Show inactive", new { @class = "control-label" })
-                                    </div>
+                                <div class="checkbox-margin-spacing">
+                                    <input type="checkbox" asp-for="@Model.Filters.IsActiveDisplayed" />
+                                    <label asp-for="@Model.Filters.IsActiveDisplayed" class="control-label">Show inactive</label>
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -72,7 +71,7 @@
         </div>
     </div>
 
-    if (Model.Users.Count == 0)
+    @if (Model.Users.Count == 0)
     {
         <div class="alert alert-info">No users available.</div>
     }
@@ -82,51 +81,57 @@
             <thead>
                 <tr>
                     <th class="text-center col-md-2">
-                        @Html.DisplayNameFor(model => model.Users[0].FirstName)
+                        <label asp-for="@Model.Users[0].FirstName"></label>
                     </th>
                     <th class="text-center col-md-2">
-                        @Html.DisplayNameFor(model => model.Users[0].LastName)
+                        <label asp-for="@Model.Users[0].LastName"></label>
                     </th>
-                    <th class="text-center col-md-3">
-                        @Html.DisplayNameFor(model => model.Users[0].UserName)
+                    <th class="text-center col-md-2">
+                        <label asp-for="@Model.Users[0].UserName"></label>
                     </th>
-                    <th class="text-center col-md-3">
-                        @Html.DisplayNameFor(model => model.Users[0].RoleId)
+                    <th class="text-center col-md-2">
+                        <label asp-for="@Model.Users[0].Email"></label>
+                    </th>
+                    <th class="text-center col-md-2">
+                        <label asp-for="@Model.Users[0].RoleId"></label>
                     </th>
                     <th class="col-md-2"></th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach (var item in Model.Users)
+                @for (int i = 0; i < Model.Users.Count; i++)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
+                            @Model.Users[i].FirstName
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
+                            @Model.Users[i].LastName
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
+                            @Model.Users[i].UserName
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.RoleName)
+                            @Model.Users[i].Email
+                        </td>
+                        <td>
+                            @Model.Users[i].RoleName
                         </td>
                         <td class="text-center">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit margin-right-5" data-toggle="tooltip" data-placement="top" title="Editing">
+                            <a asp-action="Edit" asp-route-id="@Model.Users[i].Id" class="btn-action btn-edit margin-right-5" data-toggle="tooltip" data-placement="top" title="Editing">
                                 <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
                             </a>|
 
                             @if (!Model.Filters.IsActiveDisplayed)
                             {
-                                <a href="#" class="btn-action btn-delete margin-left-5 margin-right-5" data-toggle="modal" data-target="#modal-soft-delete-confirmation" data-url="/Users/ActivateDeactivate/@item.Id" data-additionalinfo="" data-placement="top" title="Deactivate">
+                                <a href="#" class="btn-action btn-delete margin-left-5 margin-right-5" data-toggle="modal" data-target="#modal-soft-delete-confirmation" data-url="/Users/ActivateDeactivate/@Model.Users[i].Id" data-additionalinfo="" data-placement="top" title="Deactivate">
                                     <i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i>
                                 </a>
                             }
                             else
                             {
-                                <a href="#" class="btn-action btn-edit margin-left-5 margin-right-5" data-toggle="modal" data-target="#modal-reactivate-confirmation" data-url="/Users/ActivateDeactivate/@item.Id" data-additionalinfo="" data-placement="top" title="Activate">
+                                <a href="#" class="btn-action btn-edit margin-left-5 margin-right-5" data-toggle="modal" data-target="#modal-reactivate-confirmation" data-url="/Users/ActivateDeactivate/@Model.Users[i].Id" data-additionalinfo="" data-placement="top" title="Activate">
                                     <i class="glyphicon glyphicon-check" aria-hidden="true"></i>
                                 </a>
                             }
@@ -138,9 +143,8 @@
     }
 
     @Html.Partial(partialViewName: "~/Views/Shared/PartialViews/_PagingPartial.cshtml", model: Model.Users,
-                viewData: new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(), new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "action", Model.Pager.Action }, { "controller", Model.Pager.Controller },
-                                                    { "params", new Dictionary<string, string> { { "Filters.Name", Model.Filters.Name } } } })
-}
+                viewData: new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(), new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "action", Model.Pager.Action }, { "controller", Model.Pager.Controller }, { "params", new Dictionary<string, string> { { "Filters.Name", Model.Filters.Name } } } })
+</form>
 
 @section FooterSection {
     @Html.Partial("~/Views/Shared/PartialViews/_SoftDeleteConfirmation.cshtml")

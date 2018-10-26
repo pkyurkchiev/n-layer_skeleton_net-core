@@ -11,9 +11,10 @@ using System;
 namespace NTS.Data.Migrations
 {
     [DbContext(typeof(NTSContext))]
-    partial class NTSContextModelSnapshot : ModelSnapshot
+    [Migration("20181025121452_New-initial")]
+    partial class Newinitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,15 +26,16 @@ namespace NTS.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
-                    b.Property<DateTime?>("CreatedOn");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(50);
 
-                    b.Property<int?>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime?>("UpdatedOn");
 
@@ -47,9 +49,9 @@ namespace NTS.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CreatedBy");
+                    b.Property<int>("CreatedBy");
 
-                    b.Property<DateTime?>("CreatedOn");
+                    b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("Email");
 
@@ -63,7 +65,7 @@ namespace NTS.Data.Migrations
 
                     b.Property<int>("RoleId");
 
-                    b.Property<int?>("UpdatedBy");
+                    b.Property<int>("UpdatedBy");
 
                     b.Property<DateTime?>("UpdatedOn");
 
