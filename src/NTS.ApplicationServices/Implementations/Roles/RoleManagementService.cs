@@ -36,18 +36,18 @@
 
         public IEnumerable<IRole> GetAll()
         {
-            IEnumerable<RoleVM> allUsers = null;
+            IEnumerable<RoleVM> allRoles = null;
 
             try
             {
-                allUsers = _mapper.Map<IEnumerable<Role>, IEnumerable<RoleVM>>(_unitOfWork.Roles.GetAll().AsEnumerable());
+                allRoles = _mapper.Map<IEnumerable<Role>, IEnumerable<RoleVM>>(_unitOfWork.Roles.GetAll().AsEnumerable());
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
 
-            return allUsers;
+            return allRoles;
         }
 
         public IRole GetById(int id)

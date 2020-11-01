@@ -70,7 +70,7 @@
         <label asp-for="@Model.RoleId" class="col-md-2 control-label"></label>
         <div class="col-md-4">
             <select asp-for="@Model.RoleId" class="form-control">
-                @foreach (var role in Model.Roles)
+                @foreach (var role in Model?.Roles)
                 {
                     <option id="role-@role.Id" value="@role.Id" @(role.Name == "User" ? "selected" : string.Empty)>@role.Name</option>
                 }

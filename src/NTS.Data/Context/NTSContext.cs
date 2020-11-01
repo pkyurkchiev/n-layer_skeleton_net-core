@@ -12,12 +12,13 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=100.104.136.140,1400;initial catalog=N-TierSkeleton;User ID=SA;Password=!Passw0rd;");//@"Data Source=.\SQLEXPRESS;Initial Catalog=N-TierSkeleton;Integrated Security=SSPI");
+            optionsBuilder.UseSqlServer(@"Server=tcp:127.0.0.1,5433;Database=N-TierSkeleton;User Id=sa;Password=Pass@word;");//@"Data Source=.\SQLEXPRESS;Initial Catalog=N-TierSkeleton;Integrated Security=SSPI");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<Role>().ToTable("Role");
         }
     }
 }

@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    @if (Model.Users.Count == 0)
+    @if (Model.Users == null || Model.Users.Count == 0)
     {
         <div class="alert alert-info">No users available.</div>
     }
@@ -140,10 +140,10 @@
                 }
             </tbody>
         </table>
-    }
 
-    @Html.Partial(partialViewName: "~/Views/Shared/PartialViews/_PagingPartial.cshtml", model: Model.Users,
-                viewData: new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(), new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "action", Model.Pager.Action }, { "controller", Model.Pager.Controller }, { "params", new Dictionary<string, string> { { "Filters.Name", Model.Filters.Name } } } })
+        @Html.Partial(partialViewName: "~/Views/Shared/PartialViews/_PagingPartial.cshtml", model: Model.Users,
+                    viewData: new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(), new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "action", Model.Pager.Action }, { "controller", Model.Pager.Controller }, { "params", new Dictionary<string, string> { { "Filters.Name", Model.Filters.Name } } } })
+    }
 </form>
 
 @section FooterSection {

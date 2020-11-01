@@ -16,7 +16,7 @@
                 cfg.AddProfile(new ApplicationServicesAMConfiguration());
             });
             IEnumerable<TDestination> sourceList = _mapperConfiguration.CreateMapper().Map<IEnumerable<TSource>, IEnumerable<TDestination>>(source);
-            IPagedList<TDestination> pagedResult = new StaticPagedList<TDestination>(sourceList, source.GetMetaData());
+            IPagedList<TDestination> pagedResult = sourceList == null ? null : new StaticPagedList<TDestination>(sourceList, source?.GetMetaData());
 
             return pagedResult;
         }
