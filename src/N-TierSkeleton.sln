@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTS.WebServices", "NTS.WebServices\NTS.WebServices.csproj", "{4B6C65D0-C3C3-4B9F-92B3-A5496B107A8D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{7660A901-8C93-4263-A1B8-B2A5B27E0B86}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentations", "Presentations", "{7660A901-8C93-4263-A1B8-B2A5B27E0B86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BB50936D-F8F6-475E-809C-EE9898DDED9E}"
 EndProject
@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTS.Utils", "NTS.Utils\NTS.Utils.csproj", "{08FD9089-5E9E-4F0E-97DF-387D28FFD442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTS.Website", "NTS.Website\NTS.Website.csproj", "{068D93AC-2573-40C7-BAAE-DDD672AD2708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NTS.Website", "NTS.Website\NTS.Website.csproj", "{068D93AC-2573-40C7-BAAE-DDD672AD2708}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

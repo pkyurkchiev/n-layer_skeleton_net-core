@@ -57,7 +57,7 @@
                 <select asp-for="@Model.RoleId" class="form-control">
                     @foreach (var role in Model.Roles)
                     {
-                        <option id="role-@role.Id" value="@role.Id" @(role.Id == Model.RoleId ? "selected" : string.Empty)>@role.Name</option>
+                        <!option id="role-@role.Id" value="@role.Id" @(role.Id == Model.RoleId ? "selected" : string.Empty)>@role.Name</!option>
                     }
                 </select>
             </div>
