@@ -47,9 +47,8 @@
 
         public virtual void Insert(T entity)
         {
-
             //entity.CreatedBy = ;
-            entity.CreatedOn = DateTime.Now;
+            entity.CreatedOn = DateTime.UtcNow;
 
             EntityEntry<T> entry = this.Context.Entry(entity);
             if (entry.State != EntityState.Detached)
@@ -65,7 +64,7 @@
         public virtual void Update(T entity, string excludeProperties = "")
         {
             //entity.UpdatedBy = ;
-            entity.UpdatedOn = DateTime.Now;
+            entity.UpdatedOn = DateTime.UtcNow;
 
             EntityEntry<T> entry = this.Context.Entry(entity);
             if (entry.State == EntityState.Detached)
@@ -78,12 +77,10 @@
             entry.Property("CreatedBy").IsModified = false;
             entry.Property("CreatedOn").IsModified = false;
 
-            foreach (var excludeProperty in excludeProperties.Split
-                        (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var excludeProperty in excludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 entry.Property(excludeProperty).IsModified = false;
             }
-
         }
 
         public virtual void Save(T entity)
