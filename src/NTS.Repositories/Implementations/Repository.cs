@@ -9,7 +9,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Utils.Extensions;
     using X.PagedList;
 
     public class Repository<T> : IRepository<T> where T : Entity, IIsActive
