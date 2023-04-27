@@ -32,7 +32,7 @@
 
         #region  Methods
 
-        public virtual IQueryable<T> GetAll(bool isActive = true)
+        public virtual IEnumerable<T> GetAll(bool isActive = true)
         {
             var query = this.DbSet.AsQueryable();
 

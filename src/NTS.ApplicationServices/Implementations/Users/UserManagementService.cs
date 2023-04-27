@@ -28,7 +28,7 @@
             try
             {
                 allUsers = _mapper.Map<IEnumerable<User>, IEnumerable<UserVM>>(
-                    _unitOfWork.Users.GetAll().AsEnumerable());
+                    _unitOfWork.Users.GetAll());
             }
             catch (Exception ex)
             {

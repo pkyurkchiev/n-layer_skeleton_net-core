@@ -6,7 +6,6 @@
     using Shared;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using ViewModels;
     using ViewModels.Roles;
     using X.PagedList;
@@ -40,7 +39,7 @@
 
             try
             {
-                allRoles = _mapper.Map<IEnumerable<Role>, IEnumerable<RoleVM>>(_unitOfWork.Roles.GetAll().AsEnumerable());
+                allRoles = _mapper.Map<IEnumerable<Role>, IEnumerable<RoleVM>>(_unitOfWork.Roles.GetAll());
             }
             catch (Exception ex)
             {

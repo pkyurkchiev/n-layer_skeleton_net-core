@@ -10,7 +10,7 @@
 
     public interface IRepository<T> where T : Entity, IIsActive
     {
-        IQueryable<T> GetAll(bool isActive = true);
+        IEnumerable<T> GetAll(bool isActive = true);
 
         T GetById(object id, bool isActive = true);
 
