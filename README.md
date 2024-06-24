@@ -1,4 +1,4 @@
-## Introduction for N-Layer skeleton for .Net Core
+## N-Layer Project Skeleton for .Net Core
 
 This repository serves as a foundational backbone for starter projects, designed to streamline the development process by incorporating essential architectural patterns and practices. It aims to provide a structured approach to building scalable and maintainable applications.
 
