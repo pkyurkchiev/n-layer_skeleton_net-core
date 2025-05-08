@@ -59,9 +59,9 @@
             // You can add other claims here, if you want:
             var claims = new Claim[]
             {
-        new Claim(JwtRegisteredClaimNames.Sub, username),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
+        new(JwtRegisteredClaimNames.Sub, username),
+        new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
             };
 
             // Create the JWT and write it to a string
@@ -85,12 +85,12 @@
             await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
-        private Task<ClaimsIdentity> GetIdentity(string username, string password)
+        private static Task<ClaimsIdentity> GetIdentity(string username, string password)
         {
             // DON'T do this in production, obviously!
             if (username == "TEST" && password == "TEST123")
             {
-                return Task.FromResult(new ClaimsIdentity(new System.Security.Principal.GenericIdentity(username, "Token"), new Claim[] { }));
+                return Task.FromResult(new ClaimsIdentity(new System.Security.Principal.GenericIdentity(username, "Token"), []));
             }
 
             // Credentials are invalid, or account doesn't exist

@@ -13,7 +13,8 @@
 
         public int PageSize { get; set; }
 
-        public SelectList PageSizeList { get; set; }
+        public Microsoft.AspNetCore.Mvc.Rendering.SelectList PageSizeList { get; set; }
+        private static readonly int[] items = [10, 20, 50, 100];
         #endregion
 
         #region Constructors
@@ -29,13 +30,13 @@
         {
             CurrentPage = page ?? 1;
             PageSize = pageSize;
-            PageSizeList = new SelectList(new int[] { 10, 20, 50, 100 });
+            PageSizeList = new SelectList(items);
         }
 
         public PagerVM(SelectList pageSizeList)
             : this()
         {
-            PageSizeList = pageSizeList ?? new SelectList(new int[] { 10, 20, 50, 100 });
+            PageSizeList = pageSizeList ?? new SelectList(items);
         }
         #endregion
     }

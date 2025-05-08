@@ -8,7 +8,7 @@
         #region Constructors
         public Entity()
         {
-            CreatedOn = DateTime.Now;
+            CreatedOn = DateTime.UtcNow;
         }
         #endregion
 

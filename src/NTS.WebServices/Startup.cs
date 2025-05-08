@@ -20,15 +20,15 @@ namespace NTS.WebServices
         // The secret key every token will be signed with.
         // In production, you should store this securely in environment variables
         // or a key management tool. Don't hardcode this into your application!
-        private static readonly byte[] secretKey = Encoding.ASCII.GetBytes("mysupersecret_secretkey!123");
+        private static readonly byte[] secretKey = Encoding.ASCII.GetBytes("3c81df2689e91262dc636ae552e40bb09b0f25c32f1b50cd66f05628d5453d6d");
 
-        private MapperConfiguration _mapperConfiguration { get; set; }
+        private MapperConfiguration MapperConfiguration { get; set; }
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
 
-            _mapperConfiguration = new MapperConfiguration(cfg =>
+            MapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ApplicationServicesAMConfiguration());
             });
@@ -40,7 +40,7 @@ namespace NTS.WebServices
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInternalServices();
-            services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
+            services.AddSingleton<IMapper>(sp => MapperConfiguration.CreateMapper());
 
             var signingKey = new SymmetricSecurityKey(secretKey);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -78,6 +78,8 @@ namespace NTS.WebServices
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            ArgumentNullException.ThrowIfNull(loggerFactory);
 
             app.UseStaticFiles();
 

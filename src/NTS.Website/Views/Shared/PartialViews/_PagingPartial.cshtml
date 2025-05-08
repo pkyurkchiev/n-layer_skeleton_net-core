@@ -1,5 +1,4 @@
 ﻿@using X.PagedList.Mvc.Core;
-
 @model X.PagedList.IPagedList
 
 @{
@@ -22,7 +21,7 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        @Html.PagedListPager(Model, page => pageSizeTemplate + "Pager.CurrentPage=" + page + "&" + "Pager.PageSize=" + Model.PageSize, X.PagedList.Web.Common.PagedListRenderOptions.ClassicPlusFirstAndLast)
+        @Html.PagedListPager(Model, page => pageSizeTemplate + "Pager.CurrentPage=" + page + "&" + "Pager.PageSize=" + Model.PageSize)
     </div>
     <div class="col-md-1 col-md-offset-7" style="margin-top: 20px; margin-bottom: 20px;">
         <div class="dropdown page-size-dropdown-spacing">

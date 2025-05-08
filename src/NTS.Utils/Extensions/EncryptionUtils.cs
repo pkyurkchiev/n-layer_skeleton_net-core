@@ -10,12 +10,7 @@
 
         public static string ToSHA512(this string str)
         {
-            string result = string.Empty;
-
-            using (SHA512 sha512 = SHA512.Create())
-            {
-                result = Convert.ToBase64String(sha512.ComputeHash(str.ToBytes()));
-            }
+            string result = Convert.ToBase64String(SHA512.HashData(str.ToBytes()));
 
             return result;
         }

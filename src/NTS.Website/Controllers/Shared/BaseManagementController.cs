@@ -77,9 +77,9 @@
 
             var viewModel = _managementService.GetById(id.Value);
 
-            if (viewModel == null) throw new BusinessException(BusinessExceptionEnum.UnknownException.GetDescription());
-
-            return View(EditViewName, viewModel);
+            return viewModel == null
+                ? throw new BusinessException(BusinessExceptionEnum.UnknownException.GetDescription())
+                : (IActionResult)View(EditViewName, viewModel);
         }
 
         [HttpPost, ActionName("Edit")]
@@ -98,9 +98,9 @@
 
             var viewModel = _managementService.GetById(id.Value);
 
-            if (viewModel == null) throw new BusinessException(BusinessExceptionEnum.UnknownException.GetDescription());
-
-            return View(DeleteViewName, viewModel);
+            return viewModel == null
+                ? throw new BusinessException(BusinessExceptionEnum.UnknownException.GetDescription())
+                : (IActionResult)View(DeleteViewName, viewModel);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -135,7 +135,7 @@
         #region Protected Methods
         protected void CreateTEdit()
         {
-            TEdit viewModel = new TEdit();
+            TEdit viewModel = new();
             TryUpdateModelAsync(viewModel);
             if (!ModelState.IsValid) throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
 
@@ -144,7 +144,7 @@
 
         protected void EditTEdit()
         {
-            TEdit viewModel = new TEdit();
+            TEdit viewModel = new();
             TryUpdateModelAsync(viewModel);
             if (!ModelState.IsValid) throw new BusinessException(BusinessExceptionEnum.NotValideObject.GetDescription());
 

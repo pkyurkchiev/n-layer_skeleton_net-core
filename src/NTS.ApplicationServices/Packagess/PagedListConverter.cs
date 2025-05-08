@@ -1,8 +1,6 @@
 ﻿namespace NTS.ApplicationServices.Packagess
 {
     using AutoMapper;
-    using Microsoft.Extensions.DependencyInjection;
-    using System;
     using System.Collections.Generic;
     using X.PagedList;
 

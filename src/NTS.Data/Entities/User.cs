@@ -1,7 +1,5 @@
 ﻿namespace NTS.Data.Entities
 {
-    using Interfaces;
-
     public class User : EntityWithFlags
     {
         public string FirstName { get; set; }

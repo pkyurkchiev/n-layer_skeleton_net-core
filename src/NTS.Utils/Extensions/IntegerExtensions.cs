@@ -7,7 +7,7 @@
     {
         public static bool IsAnyNullOrEmpty(this object obj)
         {
-            if (Object.ReferenceEquals(obj, null))
+            if (obj is null)
                 return false;
 
             return obj.GetType().GetProperties()
@@ -16,7 +16,7 @@
 
         private static bool IsNullOrEmpty(this object value)
         {
-            if (Object.ReferenceEquals(value, null))
+            if (value is null)
                 return false;
 
             var type = value.GetType();

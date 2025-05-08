@@ -3,14 +3,12 @@
     using Interfaces;
     using Microsoft.EntityFrameworkCore;
     using System;
-    using System.Collections.Generic;
 
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         #region Fields
 
         private readonly DbContext context;
-        private readonly Dictionary<Type, object> repositories = new Dictionary<Type, object>();
 
         #endregion
 
@@ -54,10 +52,7 @@
         {
             if (disposing)
             {
-                if (this.context != null)
-                {
-                    this.context.Dispose();
-                }
+                this.context?.Dispose();
             }
         }
         #endregion

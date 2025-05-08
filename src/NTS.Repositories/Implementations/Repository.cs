@@ -10,13 +10,14 @@
     using System.Linq;
     using System.Linq.Expressions;
     using X.PagedList;
+    using X.PagedList.Extensions;
 
     public class Repository<T> : IRepository<T> where T : Entity, IIsActive
     {
         #region Constructors
         public Repository(DbContext context)
         {
-            this.Context = context ?? throw new ArgumentException("An instance of DbContext is required to use this repository.", "context");
+            this.Context = context ?? throw new ArgumentException("An instance of DbContext is required to use this repository.", nameof(context));
             this.DbSet = this.Context.Set<T>();
         }
 
@@ -76,7 +77,7 @@
             entry.Property("CreatedBy").IsModified = false;
             entry.Property("CreatedOn").IsModified = false;
 
-            foreach (var excludeProperty in excludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var excludeProperty in excludeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
             {
                 entry.Property(excludeProperty).IsModified = false;
             }
@@ -85,9 +86,13 @@
         public virtual void Save(T entity)
         {
             if (entity.Id == 0)
+            {
                 this.Insert(entity);
+            }
             else
+            {
                 this.Update(entity);
+            }
         }
 
         public virtual void ActivateDeactivate(T entity)
@@ -102,11 +107,10 @@
 
             if (entity != null)
             {
-                entity.IsActive = !entity.IsActive;
-                this.Update(entity);
+                ActivateDeactivate(entity);
             }
         }
-
+    
         public virtual void Delete(T entity)
         {
             EntityEntry<T> entry = this.Context.Entry(entity);
@@ -150,8 +154,7 @@
         /// <param name="includeProperties">Represents some additional properties of the objects that can be included in the list</param>
         /// <param name="isActive">Represents only active or unactive user</param>
         /// <returns>Returns a list of object of a certain class - all of them or filtered by some cretiria</returns>
-        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> where = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending = null, string includeProperties = "", bool isActive = true)
+        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending = null, string includeProperties = "", bool isActive = true)
         {
             var query = this.DbSet.AsQueryable();
 
@@ -160,8 +163,7 @@
                 query = query.Where(where);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                        (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var includeProperty in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
@@ -185,8 +187,7 @@
         /// <param name="includeProperties">Represents some additional properties of the objects that can be included in the list</param>
         /// <param name="isActive">Represents only active or unactive user</param>
         /// <returns>Returns a list of object of a certain class - all of them or filtered by some cretiria</returns>
-        public IPagedList<T> Find(int currentPage = 0, int itemsPerPage = 0, Expression<Func<T, bool>> where = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending = null, string includeProperties = "", bool? isActive = true)
+        public IPagedList<T> Find(int currentPage = 0, int itemsPerPage = 0, Expression<Func<T, bool>> where = null, Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending = null, string includeProperties = "", bool? isActive = true)
         {
             var query = this.DbSet.AsQueryable();
 
@@ -196,7 +197,7 @@
             }
 
             foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                ([','], StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
@@ -219,7 +220,7 @@
 
         #region Private Methods
 
-        private IQueryable<T> SoftDeleteQueryFilter(IQueryable<T> query, bool? isActive)
+        private static IQueryable<T> SoftDeleteQueryFilter(IQueryable<T> query, bool? isActive)
         {
             if (isActive.HasValue) query = query.Where(x => x.IsActive == isActive.Value);
             return query;

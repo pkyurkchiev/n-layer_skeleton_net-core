@@ -18,7 +18,7 @@
 
         // POST: api/[controller]
         [HttpPost("save")]
-        public JsonResult Post(UserVM model)
+        public JsonResult Post([FromBody] UserVM model)
         {
             int result = _managementService.Save(model);
             if (result == -1)
