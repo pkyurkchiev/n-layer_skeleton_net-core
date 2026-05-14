@@ -10,16 +10,9 @@ namespace NTS.Website
 {
     public class Startup
     {
-        private MapperConfiguration _mapperConfiguration { get; set; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            _mapperConfiguration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new ApplicationServicesAMConfiguration());
-            });
         }
 
         public IConfiguration Configuration { get; }
@@ -28,7 +21,11 @@ namespace NTS.Website
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInternalServices();
-            services.AddSingleton<IMapper>(sp => _mapperConfiguration.CreateMapper());
+            services.AddTransient(typeof(PagedListConverter<,>));
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<ApplicationServicesAMConfiguration>();
+            });
 
             services.AddMvc();
         }

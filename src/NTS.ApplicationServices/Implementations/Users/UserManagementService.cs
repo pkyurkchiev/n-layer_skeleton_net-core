@@ -31,7 +31,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Error occurred while getting all users: {Message}", ex.Message);
             }
 
             return allUsers;
@@ -51,7 +51,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Error occurred while finding users: {Message}", ex.Message);
             }
 
             return allUsers;
@@ -68,7 +68,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Error occurred while getting user by id: {Message}", ex.Message);
             }
 
             return user;
@@ -86,7 +86,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Error occurred while activating/deactivating user: {Message}", ex.Message);
                 return -1;
             }
         }
@@ -102,7 +102,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Error occurred while deleting user: {Message}", ex.Message);
                 return -1;
             }
 
@@ -130,7 +130,7 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError("Error occurred while saving user: {Message}", ex.Message);
                 return -1;
             }
 

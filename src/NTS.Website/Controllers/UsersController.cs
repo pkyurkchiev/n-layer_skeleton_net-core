@@ -99,7 +99,8 @@
 
         protected override ListUserVM PrepareModelForList(ListUserVM model, IPagedList<IUser> collection, PagerVM pager)
         {
-            model.Users = _mapper.Map<IPagedList<IUser>, IPagedList<UserVM>>(collection);
+            if (collection != null)
+                model.Users = _mapper.Map<IPagedList<IUser>, IPagedList<UserVM>>(collection);
 
             return model;
         }

@@ -66,14 +66,16 @@
         {
             TObject model = _managementService.GetById(id);
 
-            if (model == null)
-                throw new BusinessException(BusinessExceptionEnum.NotFoundException.GetDescription());
+            if (model != null)
+            {
+                int result = _managementService.Delete(id);
+                if (result == -1)
+                    throw new BusinessException(BusinessExceptionEnum.NotDeleteObject.GetDescription());
 
-            int result = _managementService.Delete(id);
-            if (result == -1)
-                throw new BusinessException(BusinessExceptionEnum.NotDeleteObject.GetDescription());
+                return Json(result);
+            }
 
-            return Json(result);
+            throw new BusinessException(BusinessExceptionEnum.NotFoundException.GetDescription());
         }
 
         // GET api/[controller]/version

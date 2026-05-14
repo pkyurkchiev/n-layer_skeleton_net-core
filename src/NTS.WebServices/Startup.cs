@@ -22,16 +22,9 @@ namespace NTS.WebServices
         // or a key management tool. Don't hardcode this into your application!
         private static readonly byte[] secretKey = Encoding.ASCII.GetBytes("3c81df2689e91262dc636ae552e40bb09b0f25c32f1b50cd66f05628d5453d6d");
 
-        private MapperConfiguration MapperConfiguration { get; set; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            MapperConfiguration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new ApplicationServicesAMConfiguration());
-            });
         }
 
         public IConfiguration Configuration { get; }
@@ -40,7 +33,11 @@ namespace NTS.WebServices
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInternalServices();
-            services.AddSingleton<IMapper>(sp => MapperConfiguration.CreateMapper());
+            services.AddTransient(typeof(PagedListConverter<,>));
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<ApplicationServicesAMConfiguration>();
+            });
 
             var signingKey = new SymmetricSecurityKey(secretKey);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
